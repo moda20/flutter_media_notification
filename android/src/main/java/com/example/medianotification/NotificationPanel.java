@@ -107,6 +107,7 @@ public class NotificationPanel {
         }
 
         setListeners(remoteView);
+        setListeners(bigRemoteView);
         nBuilder.setCustomContentView(remoteView);
         nBuilder.setCustomBigContentView(bigRemoteView);
 
@@ -146,6 +147,20 @@ public class NotificationPanel {
         Intent selectIntent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("select");
         PendingIntent selectPendingIntent = PendingIntent.getBroadcast(parent, 0, selectIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        view.setOnClickPendingIntent(R.id.layout, selectPendingIntent);
+
+        //Big Layout Listeners
+
+        view.setOnClickPendingIntent(R.id.toggle, pendingIntent);
+
+        // Вперед
+
+        view.setOnClickPendingIntent(R.id.next, pendingNextIntent);
+
+        // Назад
+        view.setOnClickPendingIntent(R.id.prev, pendingPrevIntent);
+
+        // Нажатие на уведомление
         view.setOnClickPendingIntent(R.id.layout, selectPendingIntent);
     }
 
