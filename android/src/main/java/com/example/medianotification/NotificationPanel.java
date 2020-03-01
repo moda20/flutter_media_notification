@@ -21,6 +21,7 @@ public class NotificationPanel {
     private NotificationManager nManager;
     private NotificationCompat.Builder nBuilder;
     private RemoteViews remoteView;
+    private RemoteViews bigRemoteView;
     private String title;
     private String author;
     private String image;
@@ -50,17 +51,22 @@ public class NotificationPanel {
                 .setSound(null);
 
         remoteView = new RemoteViews(parent.getPackageName(), R.layout.notificationlayout);
+        bigRemoteView = new RemoteViews(parent.getPackageName(), R.layout.bignotificationlayout);
 
         remoteView.setTextViewText(R.id.title, title);
+        bigRemoteView.setTextViewText(R.id.title, title);
         remoteView.setTextViewText(R.id.author, author);
+        bigRemoteView.setTextViewText(R.id.author, author);
 
         if (image != null) {
 
             Bitmap BmpImage = BitmapFactory.decodeByteArray(image,offset,length);
 
             remoteView.setImageViewBitmap(R.id.img, BmpImage);
+            bigRemoteView.setImageViewBitmap(R.id.img, BmpImage);
         }else{
             remoteView.setImageViewBitmap(R.id.img, null);
+            bigRemoteView.setImageViewBitmap(R.id.img, null);
         }
 
 
@@ -69,31 +75,40 @@ public class NotificationPanel {
         if(bgColor!=null){
             remoteView.setInt(R.id.layout, "setBackgroundColor",
                     Color.parseColor(bgColor));
+            bigRemoteView.setInt(R.id.Biglayout, "setBackgroundColor",
+                    Color.parseColor(bgColor));
         }
         if(titleColor!=null){
             remoteView.setTextColor(R.id.title, Color.parseColor(titleColor));
+            bigRemoteView.setTextColor(R.id.title, Color.parseColor(titleColor));
         }
         if(subtitleColor!=null){
             remoteView.setTextColor(R.id.author, Color.parseColor(subtitleColor));
+            bigRemoteView.setTextColor(R.id.author, Color.parseColor(subtitleColor));
         }
         if(iconColor!=null){
             Bitmap PrevBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_previous_black_36);
             remoteView.setImageViewBitmap(R.id.prev, changeBitmapColor(PrevBmp,Color.parseColor(iconColor)));
+            bigRemoteView.setImageViewBitmap(R.id.prev, changeBitmapColor(PrevBmp,Color.parseColor(iconColor)));
             Bitmap NextBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_next_black_36);
             remoteView.setImageViewBitmap(R.id.next, changeBitmapColor(NextBmp,Color.parseColor(iconColor)));
+            bigRemoteView.setImageViewBitmap(R.id.next, changeBitmapColor(NextBmp,Color.parseColor(iconColor)));
         }
 
 
         if (this.play) {
             Bitmap toggleBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_pause_black_48);
             remoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
+            bigRemoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
         } else {
             Bitmap toggleBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_play_arrow_black_48);
             remoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
+            bigRemoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
         }
 
         setListeners(remoteView);
-        nBuilder.setContent(remoteView);
+        nBuilder.setCustomContentView(remoteView);
+        nBuilder.setCustomBigContentView(bigRemoteView);
 
         Notification notification = nBuilder.build();
 

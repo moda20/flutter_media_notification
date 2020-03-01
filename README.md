@@ -33,7 +33,7 @@ MediaNotification.hide();
 
 ### Screenshots
 
-|                                           |                                           |
+|       Notification Area                                    |        Lock Screen                                   |
 | ----------------------------------------- | ----------------------------------------- |
 | <img src="screenshots/scrs.png" width="250"> | <img src="screenshots/scrs2.png" width="250"> |
 
