@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -32,18 +33,19 @@ class _MyAppState extends State<MyApp> {
 
     MediaNotification.setListener('play', () {
       setState(() => status = 'play');
+
     });
     
     MediaNotification.setListener('next', () {
-      
+      MediaNotification.setTitle("${DateTime.now().millisecondsSinceEpoch} XXX");
     });
 
     MediaNotification.setListener('prev', () {
-      
+      MediaNotification.setSubtitle("${DateTime.now().millisecondsSinceEpoch} XXX");
     });
 
     MediaNotification.setListener('select', () {
-      
+      MediaNotification.setTitle("${DateTime.now().millisecondsSinceEpoch} XXX");
     });
   }
 

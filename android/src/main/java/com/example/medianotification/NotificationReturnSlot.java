@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 public class NotificationReturnSlot extends BroadcastReceiver {
 
@@ -17,18 +18,8 @@ public class NotificationReturnSlot extends BroadcastReceiver {
                 MediaNotificationPlugin.callEvent("next");
                 break;
             case "toggle":
-                String title = intent.getStringExtra("title");
-                String author = intent.getStringExtra("author");
-                byte[] image = intent.getByteArrayExtra("image");
-                String action = intent.getStringExtra("action");
-                int length = intent.getIntExtra("length",0);
-                int offset = intent.getIntExtra("offset",100);
-                String bgColor = intent.getStringExtra("bgColor");
-                String titleColor = intent.getStringExtra("titleColor");
-                String subtitleColor = intent.getStringExtra("subtitleColor");
-                String iconColor = intent.getStringExtra("iconColor");
-
-                MediaNotificationPlugin.show(title, author, action.equals("play"),image,length,offset,bgColor,titleColor,subtitleColor,iconColor);
+                String action = !MediaNotificationPlugin.getnPanel().isPlay()?"play":"pause";
+                MediaNotificationPlugin.getnPanel().togglePlayPause();
                 MediaNotificationPlugin.callEvent(action);
                 break;
             case "select":

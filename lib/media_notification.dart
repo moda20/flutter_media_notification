@@ -65,7 +65,32 @@ class MediaNotification {
     await _channel.invokeMethod('hide');
   }
 
+  static Future togglePlayPause() async {
+    await _channel.invokeMethod('togglePlayPause');
+  }
+
   static setListener(String event, Function callback) {
     _listeners.addAll({event: callback});
-  } 
+  }
+
+  static Future setTitle(String title) async{
+    final Map<String, dynamic> params = <String, dynamic>{
+      'title': title,
+    };
+    await _channel.invokeMethod('setTitle', params);
+  }
+
+  static Future setSubtitle(String subtitle) async{
+    final Map<String, dynamic> params = <String, dynamic>{
+      'subtitle': subtitle,
+    };
+    await _channel.invokeMethod('setSubtitle', params);
+  }
+
+  static Future setTo(bool play) async{
+    final Map<String, dynamic> params = <String, dynamic>{
+      'play': play,
+    };
+    await _channel.invokeMethod('setToPlayPause', params);
+  }
 }
