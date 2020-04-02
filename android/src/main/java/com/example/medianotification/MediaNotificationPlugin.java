@@ -10,6 +10,41 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.PowerManager;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import android.support.v4.media.MediaBrowserCompat;
+import androidx.media.MediaBrowserServiceCompat;
+import android.support.v4.media.MediaDescriptionCompat;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.RatingCompat;
+import androidx.media.app.NotificationCompat.MediaStyle;
+import androidx.media.session.MediaButtonReceiver;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
+import android.view.KeyEvent;
+
+
 /**
  * MediaNotificationPlugin
  */
@@ -51,7 +86,8 @@ public class MediaNotificationPlugin implements MethodCallHandler {
                 final String titleColor = call.argument("titleColor");
                 final String subtitleColor = call.argument("subtitleColor");
                 final String iconColor = call.argument("iconColor");
-                show(title, author, play, image, length, offset, bgColor, titleColor, subtitleColor, iconColor);
+                final String iconId = call.argument("iconId");
+                show(title, author, play, image, length, offset, iconId, bgColor, titleColor, subtitleColor, iconColor);
                 result.success(null);
                 break;
             case "hide":
@@ -61,6 +97,11 @@ public class MediaNotificationPlugin implements MethodCallHandler {
             case "setTitle":
                 String Newtitle = call.argument("title");
                 setTitle(Newtitle);
+                result.success(null);
+                break;
+            case "setIcon":
+                String icon = call.argument("icon");
+                setIcon(icon);
                 result.success(null);
                 break;
             case "setSubtitle":
@@ -100,7 +141,7 @@ public class MediaNotificationPlugin implements MethodCallHandler {
         });
     }
 
-    public static void show(String title, String author, boolean play, byte[] image, int length, int offset, String bgColor, String titleColor, String subtitleColor, String iconColor) {
+    public static void show(String title, String author, boolean play, byte[] image, int length, int offset, String iconId, String bgColor, String titleColor, String subtitleColor, String iconColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
@@ -109,8 +150,7 @@ public class MediaNotificationPlugin implements MethodCallHandler {
             NotificationManager notificationManager = registrar.context().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-
-        nPanel = new NotificationPanel(registrar.context(), title, author, play, image, length, offset, bgColor, titleColor, subtitleColor, iconColor);
+        nPanel = new NotificationPanel(registrar.context(), title, author, play, image, length, offset, getResourceId(iconId), bgColor, titleColor, subtitleColor, iconColor);
     }
 
     private void hide() {
@@ -129,6 +169,19 @@ public class MediaNotificationPlugin implements MethodCallHandler {
 
     public void setTo(boolean play) {
         nPanel.setTo(play);
+    }
+    public void setIcon(String iconName) {
+        //find the iconId
+        int iconId = getResourceId(iconName);
+        nPanel.setIcon(iconId);
+    }
+
+    //This will get the resourceID based on the resource String, the resource String needs to be in the res folder
+    private static int getResourceId(String resource) {
+        String[] parts = resource.split("/");
+        String resourceType = parts[0];
+        String resourceName = parts[1];
+        return registrar.context().getResources().getIdentifier(resourceName, resourceType, registrar.context().getApplicationContext().getPackageName());
     }
 }
 

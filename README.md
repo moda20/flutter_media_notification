@@ -5,7 +5,7 @@ Media notification for flutter, on android (IOs Not implemented)
 
 #### This plugin is used in the music player app [TuneIn](https://github.com/moda20/flutter-tunein).
 #### please star this repository or [TuneIn](https://github.com/moda20/flutter-tunein), i am open to comments and possible features.
-
+#### You can contact me using my email "kadhem03@gmail.com" or the info at the end of this ReadMe
 ## Usage
 
 
@@ -42,6 +42,8 @@ MediaNotification.hide();
 ### Extra functions and listeners
 
 You can use the next functions and listeners n order to further polish the experience of using the plugin
+
+
  
 #### Extra Functions 
 
@@ -55,6 +57,9 @@ You can use the next functions and listeners n order to further polish the exper
 
 `MediaNotification.setTitle(TitleString);` must take a String argument will change the title on the notification to the given string
 
+`MediaNotification.setStatusIcon(IconString);` must take a String argument will change the icon on the Statusbar to the given string
+ *IconString argument must be the path to the icon in the `res` folder. i.e : `"drawable/baseline_play_arrow_black_48"`
+ 
 #### Extra Listeners
 
 The following listeners can be used to listen on the different control buttons when tapped
@@ -85,11 +90,11 @@ MediaNotification.setListener('play', () {
 
 ## Screenshots
 
-|       Notification Area                                    |        Lock Screen                                   |        Lock Screen                                   |
+|       Notification Area                                    |        Lock Screen                                   |        Notification Area                                   |
 | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
 | <img src="screenshots/scrs.png" width="250"> | <img src="screenshots/scrs2.png" width="250"> | <img src="screenshots/scrs3.png" width="250"> |
 
-## Getting Started With the development
+## Getting Started With the flutter plugin development
 
 For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).
@@ -108,7 +113,7 @@ Buy me a cup of coffee ☕️:
 *NOT there yet*
 
 
-## Contact me
+## Contact me & Hire Me
 
 *email:* kadhem03@gmail.com
 

@@ -58,6 +58,16 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<void> changeStatusIcon() async {
+    String secondIcon = "drawable/baseline_play_arrow_black_48";
+    try {
+      await MediaNotification.setStatusIcon(secondIcon);
+      setState(() => status = 'hidden');
+    } on PlatformException {
+
+    }
+  }
+
   Future<void> show(title, author) async {
     try {
       await MediaNotification.show(
@@ -67,7 +77,8 @@ class _MyAppState extends State<MyApp> {
           bgColor: Colors.deepPurple,
           iconColor: Colors.blue,
           subtitleColor: Colors.deepOrange,
-          titleColor: Colors.orange
+          titleColor: Colors.orange,
+          StatusBarIcon: "drawable/baseline_pause_black_48"
       );
       setState(() => status = 'play');
     } on PlatformException {
@@ -99,6 +110,10 @@ class _MyAppState extends State<MyApp> {
                 FlatButton(
                   child: Text('Hide notification'),
                   onPressed: hide,
+                ),
+                FlatButton(
+                  child: Text('Change Status Icon'),
+                  onPressed: changeStatusIcon,
                 ),
                 Text('Status: ' + status)
               ],

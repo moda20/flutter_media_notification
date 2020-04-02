@@ -23,7 +23,8 @@ class MediaNotification {
    */
   static Future show(
       {@required title, @required author, play = true, String image = "", List<
-          int> BitmapImage, Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Icon previousIcon}) async {
+          int> BitmapImage, Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Icon previousIcon,
+        String StatusBarIcon}) async {
     //switching the image from a URI to a byteArray for Android with offset and length;
     List<int> imagebytes;
     if (image != null) {
@@ -55,6 +56,7 @@ class MediaNotification {
       'iconColor': iconColor != null
           ? '#${iconColor.value.toRadixString(16)}'
           : '#${Colors.black.value.toRadixString(16)}',
+      'iconId': StatusBarIcon != null ? StatusBarIcon : ""
     };
     await _channel.invokeMethod('show', params);
 
@@ -78,6 +80,13 @@ class MediaNotification {
       'title': title,
     };
     await _channel.invokeMethod('setTitle', params);
+  }
+
+  static Future setStatusIcon(String iconName) async {
+    final Map<String, dynamic> params = <String, dynamic>{
+      'icon': iconName,
+    };
+    await _channel.invokeMethod('setIcon', params);
   }
 
   static Future setSubtitle(String subtitle) async{

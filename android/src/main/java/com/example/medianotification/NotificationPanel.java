@@ -30,7 +30,8 @@ public class NotificationPanel {
     private String titleColor;
     private String subtitleColor;
     private String iconColor;
-    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, String bgColor, String titleColor, String subtitleColor, String iconColor ) {
+    private int iconId;
+    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, int iconId, String bgColor, String titleColor, String subtitleColor, String iconColor ) {
         this.parent = parent;
         this.title = title;
         this.author = author;
@@ -39,10 +40,10 @@ public class NotificationPanel {
         this.titleColor=titleColor;
         this.subtitleColor=subtitleColor;
         this.iconColor=iconColor;
-
+        this.iconId = iconId;
         nBuilder = new NotificationCompat.Builder(parent, "media_notification")
                 .setContentTitle("Player")
-                .setSmallIcon(R.drawable.ic_stat_music_note)
+
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setOngoing(this.play)
@@ -50,6 +51,11 @@ public class NotificationPanel {
                 .setVibrate(new long[]{0L})
                 .setSound(null);
 
+        if(this.iconId!=0){
+            nBuilder.setSmallIcon(this.iconId);
+        }else{
+            nBuilder.setSmallIcon(R.drawable.ic_stat_music_note);
+        }
         remoteView = new RemoteViews(parent.getPackageName(), R.layout.notificationlayout);
         bigRemoteView = new RemoteViews(parent.getPackageName(), R.layout.bignotificationlayout);
 
@@ -172,6 +178,12 @@ public class NotificationPanel {
         nBuilder.setCustomContentView(remoteView);
         nBuilder.setCustomBigContentView(bigRemoteView);
         nBuilder.setOngoing(this.play);
+        nManager.notify(1,nBuilder.build());
+    }
+
+
+    public void setIcon(int iconId){
+        nBuilder.setSmallIcon(iconId);
         nManager.notify(1,nBuilder.build());
     }
 
