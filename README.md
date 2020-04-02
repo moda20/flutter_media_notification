@@ -1,6 +1,6 @@
 # media_notification
 
-Media notification for flutter, on android (IOs Not implemented)
+Media notification for flutter, on Android Only (iOS Not implemented)
 
 
 #### This plugin is used in the music player app [TuneIn](https://github.com/moda20/flutter-tunein).
