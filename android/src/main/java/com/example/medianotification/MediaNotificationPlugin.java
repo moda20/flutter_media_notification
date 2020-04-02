@@ -178,6 +178,8 @@ public class MediaNotificationPlugin implements MethodCallHandler {
 
     //This will get the resourceID based on the resource String, the resource String needs to be in the res folder
     private static int getResourceId(String resource) {
+        if(resource.length()==0)
+            return
         String[] parts = resource.split("/");
         String resourceType = parts[0];
         String resourceName = parts[1];
