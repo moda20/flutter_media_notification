@@ -154,26 +154,39 @@ public class MediaNotificationPlugin implements MethodCallHandler {
     }
 
     private void hide() {
-        nPanel.notificationCancel();
+        if(nPanel!=null){
+            nPanel.notificationCancel();
+        }
+
     }
 
     public void setTitle(String title) {
-        nPanel.setTitle(title);
+        if(nPanel!=null){
+            nPanel.setTitle(title);
+        }
     }
     public void setSubTitle(String subtitle) {
-        nPanel.setSubtitle(subtitle);
+        if(nPanel!=null){
+            nPanel.setSubtitle(subtitle);
+        }
     }
     public void togglePlayPause() {
-        nPanel.togglePlayPause();
+        if(nPanel!=null){
+            nPanel.togglePlayPause();
+        }
     }
 
     public void setTo(boolean play) {
-        nPanel.setTo(play);
+        if(nPanel!=null){
+            nPanel.setTo(play);
+        }
     }
     public void setIcon(String iconName) {
-        //find the iconId
-        int iconId = getResourceId(iconName);
-        nPanel.setIcon(iconId);
+        if(nPanel!=null){
+            //find the iconId
+            int iconId = getResourceId(iconName);
+            nPanel.setIcon(iconId);
+        }
     }
 
     //This will get the resourceID based on the resource String, the resource String needs to be in the res folder
