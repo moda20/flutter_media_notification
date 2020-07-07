@@ -54,9 +54,11 @@ import android.view.KeyEvent;
  */
 public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin {
     private static final String CHANNEL_ID = "com.moda.twenty/media_notification";
+    private static final String BACK_CHANNEL_ID = "com.moda.twenty/media_notification_back";
     private static Registrar registrar;
     private static NotificationPanel nPanel;
     private static MethodChannel channel;
+    private static MethodChannel back_channel;
 
     private MediaNotificationPlugin(Registrar r) {
         registrar = r;
@@ -73,6 +75,7 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
 
     private void initInstance(BinaryMessenger binaryMessenger, Context context) {
         MediaNotificationPlugin.channel  = new MethodChannel(binaryMessenger, CHANNEL_ID);
+        MediaNotificationPlugin.back_channel  = new MethodChannel(binaryMessenger, BACK_CHANNEL_ID);
         MediaNotificationPlugin.channel.setMethodCallHandler(new MediaNotificationPlugin(registrar));
     }
 
@@ -85,7 +88,9 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         MediaNotificationPlugin.channel.setMethodCallHandler(null);
+        MediaNotificationPlugin.back_channel.setMethodCallHandler(null);
         MediaNotificationPlugin.channel = null;
+        MediaNotificationPlugin.back_channel = null;
     }
 
     public static NotificationPanel getnPanel() {
@@ -145,7 +150,7 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
 
     public static void callEvent(String event) {
 
-        MediaNotificationPlugin.channel.invokeMethod(event, null, new Result() {
+        MediaNotificationPlugin.back_channel.invokeMethod(event, null, new Result() {
             @Override
             public void success(Object o) {
                 // this will be called with o = "some string"

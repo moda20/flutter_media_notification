@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 
 class MediaNotification {
   static const MethodChannel _channel = const MethodChannel('com.moda.twenty/media_notification');
+  static const MethodChannel _channel_back = const MethodChannel('com.moda.twenty/media_notification_back');
   static Map<String, Function> _listeners = new Map();
   
   static Future<dynamic> _myUtilsHandler(MethodCall methodCall) async {
@@ -60,7 +61,7 @@ class MediaNotification {
     };
     await _channel.invokeMethod('show', params);
 
-    _channel.setMethodCallHandler(_myUtilsHandler);
+    _channel_back.setMethodCallHandler(_myUtilsHandler);
   }
 
   static Future hide() async {

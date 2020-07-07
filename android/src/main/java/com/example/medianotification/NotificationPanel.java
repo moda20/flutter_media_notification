@@ -41,7 +41,7 @@ public class NotificationPanel {
         this.subtitleColor=subtitleColor;
         this.iconColor=iconColor;
         this.iconId = iconId;
-        nBuilder = new NotificationCompat.Builder(parent, "com.moda.twenty/media_notification")
+        nBuilder = new NotificationCompat.Builder(parent, "com.moda.twenty/media_notification_back")
                 .setContentTitle("Player")
 
                 .setPriority(Notification.PRIORITY_DEFAULT)
