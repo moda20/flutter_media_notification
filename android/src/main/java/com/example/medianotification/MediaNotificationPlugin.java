@@ -5,6 +5,8 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.BinaryMessenger;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -30,6 +32,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import android.support.v4.media.MediaBrowserCompat;
@@ -48,8 +52,8 @@ import android.view.KeyEvent;
 /**
  * MediaNotificationPlugin
  */
-public class MediaNotificationPlugin implements MethodCallHandler {
-    private static final String CHANNEL_ID = "media_notification";
+public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin {
+    private static final String CHANNEL_ID = "com.moda.twenty/media_notification";
     private static Registrar registrar;
     private static NotificationPanel nPanel;
     private static MethodChannel channel;
@@ -62,10 +66,26 @@ public class MediaNotificationPlugin implements MethodCallHandler {
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        MediaNotificationPlugin plugin = new MediaNotificationPlugin(registrar);
+        final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL_ID);
+        MediaNotificationPlugin instance = new MediaNotificationPlugin(registrar);
+        instance.initInstance(registrar.messenger(), registrar.context());
+    }
 
-        MediaNotificationPlugin.channel = new MethodChannel(registrar.messenger(), "media_notification");
+    private void initInstance(BinaryMessenger binaryMessenger, Context context) {
+        MediaNotificationPlugin.channel  = new MethodChannel(binaryMessenger, CHANNEL_ID);
         MediaNotificationPlugin.channel.setMethodCallHandler(new MediaNotificationPlugin(registrar));
+    }
+
+
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        initInstance(binding.getBinaryMessenger(), binding.getApplicationContext());
+    }
+
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        MediaNotificationPlugin.channel.setMethodCallHandler(null);
+        MediaNotificationPlugin.channel = null;
     }
 
     public static NotificationPanel getnPanel() {

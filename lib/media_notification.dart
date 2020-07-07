@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 class MediaNotification {
-  static const MethodChannel _channel = const MethodChannel('media_notification');
+  static const MethodChannel _channel = const MethodChannel('com.moda.twenty/media_notification');
   static Map<String, Function> _listeners = new Map();
   
   static Future<dynamic> _myUtilsHandler(MethodCall methodCall) async {
@@ -73,6 +73,7 @@ class MediaNotification {
 
   static setListener(String event, Function callback) {
     _listeners.addAll({event: callback});
+    print(_listeners);
   }
 
   static Future setTitle(String title) async{
