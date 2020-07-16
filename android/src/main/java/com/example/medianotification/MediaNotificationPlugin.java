@@ -182,7 +182,6 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
         if(nPanel!=null){
             nPanel.notificationCancel();
         }
-
     }
 
     public void setTitle(String title) {

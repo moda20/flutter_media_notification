@@ -74,7 +74,6 @@ class MediaNotification {
 
   static setListener(String event, Function callback) {
     _listeners.addAll({event: callback});
-    print(_listeners);
   }
 
   static Future setTitle(String title) async{
