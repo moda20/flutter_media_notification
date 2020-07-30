@@ -74,6 +74,8 @@ class _MyAppState extends State<MyApp> {
           title: title,
           author: author,
           image: "/storage/emulated/0/Pictures/Reddit/c4c7164.jpg",
+          bgImage: "/storage/emulated/0/Pictures/Reddit/c4c7164.jpg",
+          bgImageBackgroundColor:Colors.red,
           bgColor: Colors.deepPurple,
           iconColor: Colors.blue,
           subtitleColor: Colors.deepOrange,
@@ -101,7 +103,7 @@ class _MyAppState extends State<MyApp> {
               children: <Widget>[
                 FlatButton(
                   child: Text('Show notification'),
-                  onPressed: () => show('Title', 'Song author'),
+                  onPressed: () => show('TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle', 'Song authorTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle'),
                 ),
                 FlatButton(
                   child: Text('Update notification'),

@@ -25,13 +25,21 @@ class MediaNotification {
   static Future show(
       {@required title, @required author, play = true, String image = "", List<
           int> BitmapImage, Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Icon previousIcon,
-        String StatusBarIcon}) async {
+        String StatusBarIcon, String bgImage, List<
+          int> bgBitmapImage, Color bgImageBackgroundColor}) async {
     //switching the image from a URI to a byteArray for Android with offset and length;
     List<int> imagebytes;
+    List<int> bgImagebytes;
     if (image != null) {
       File imgFile = File(image);
       if (imgFile != null) {
         imagebytes = imgFile.readAsBytesSync();
+      }
+    }
+    if(bgImage!=null){
+      File bgImgFile = File(bgImage);
+      if (bgImgFile != null) {
+        bgImagebytes = bgImgFile.readAsBytesSync();
       }
     }
 
@@ -42,12 +50,20 @@ class MediaNotification {
       'author': author,
       'play': play,
       'image': imagebytes != null ? imagebytes : BitmapImage,
+      'bgImage': bgImagebytes != null ? bgImagebytes : bgBitmapImage,
       'length': imagebytes != null ? imagebytes.length : BitmapImage != null
           ? BitmapImage.length
           : 0,
       'offset': 0,
+      'bgLength': bgImagebytes != null ? bgImagebytes.length : bgBitmapImage != null
+          ? bgBitmapImage.length
+          : 0,
+      'bgOffset': 0,
       'bgColor': bgColor != null
           ? '#${bgColor.value.toRadixString(16)}'
+          : '#${Colors.white.value.toRadixString(16)}',
+      'bgImageBackgroundColor': bgImageBackgroundColor != null
+          ? '#${bgImageBackgroundColor.value.toRadixString(16)}'
           : '#${Colors.white.value.toRadixString(16)}',
       'titleColor': titleColor != null ? '#${titleColor.value.toRadixString(
           16)}' : '#${Colors.black.value.toRadixString(16)}',

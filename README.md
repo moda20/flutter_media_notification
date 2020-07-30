@@ -23,6 +23,9 @@ try {
         title: title, // the title of the track
         author: author, // a subtitle usually the artist
         image:"/storage/emulated/0/Pictures/Reddit/c4c7164.jpg", // an image, Must be a URI
+        bgImage: "/storage/emulated/0/Pictures/Reddit/c4c7164.jpg", // an image that is show on the lower part of (ONLY) the BIG View 
+        bgBitmapImage: defaultImageBytes // the lower part image but in bytes form, can get over any permission problems 
+        bgImageBackgroundColor:Colors.red, // The background color of the lower part if the image doesn't fill it completely
         BitmapImage: defaultImageBytes, // an image in bytes form, can get over any permission problems 
         bgColor: Colors.deepPurple, // the background Color of the notification panel
         iconColor: Colors.blue, // The control icons colors
@@ -92,7 +95,7 @@ MediaNotification.setListener('play', () {
 
 |       Notification Area                                    |        Lock Screen                                   |        Notification Area                                   |
 | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| <img src="screenshots/scrs.png" width="250"> | <img src="screenshots/scrs2.png" width="250"> | <img src="screenshots/scrs3.png" width="250"> |
+| <img src="screenshots/scrs.png" width="250"> | <img src="screenshots/scrs2.png" width="250"> | <img src="screenshots/scrs4.png" width="250"> |
 
 ## Getting Started With the flutter plugin development
 

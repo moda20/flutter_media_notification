@@ -27,16 +27,18 @@ public class NotificationPanel {
     private String image;
     private boolean play;
     private String bgColor;
+    private String bgImageColor;
     private String titleColor;
     private String subtitleColor;
     private String iconColor;
     private int iconId;
-    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, int iconId, String bgColor, String titleColor, String subtitleColor, String iconColor ) {
+    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, int iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, byte[] bgImg, int bgLength, int bgOffset, String bgImageBackgroundColor ) {
         this.parent = parent;
         this.title = title;
         this.author = author;
         this.play = play;
         this.bgColor = bgColor;
+        this.bgImageColor = bgImageBackgroundColor;
         this.titleColor=titleColor;
         this.subtitleColor=subtitleColor;
         this.iconColor=iconColor;
@@ -70,9 +72,19 @@ public class NotificationPanel {
 
             remoteView.setImageViewBitmap(R.id.img, BmpImage);
             bigRemoteView.setImageViewBitmap(R.id.img, BmpImage);
+
         }else{
             remoteView.setImageViewBitmap(R.id.img, null);
             bigRemoteView.setImageViewBitmap(R.id.img, null);
+            bigRemoteView.setImageViewBitmap(R.id.bgimg, null);
+        }
+
+
+        if(bgImg!=null){
+            Bitmap BmpBgImage = BitmapFactory.decodeByteArray(bgImg,bgOffset,bgLength);
+            bigRemoteView.setImageViewBitmap(R.id.bgimg, BmpBgImage);
+        }else{
+            bigRemoteView.setImageViewBitmap(R.id.bgimg, null);
         }
 
 
@@ -81,8 +93,13 @@ public class NotificationPanel {
         if(bgColor!=null){
             remoteView.setInt(R.id.layout, "setBackgroundColor",
                     Color.parseColor(bgColor));
-            bigRemoteView.setInt(R.id.Biglayout, "setBackgroundColor",
+            bigRemoteView.setInt(R.id.layout, "setBackgroundColor",
                     Color.parseColor(bgColor));
+        }
+
+        if(bgImageBackgroundColor!=null){
+            bigRemoteView.setInt(R.id.LowerLayout, "setBackgroundColor",
+                    Color.parseColor(bgImageBackgroundColor));
         }
         if(titleColor!=null){
             remoteView.setTextColor(R.id.title, Color.parseColor(titleColor));
