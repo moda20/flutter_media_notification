@@ -78,6 +78,7 @@ class _MyAppState extends State<MyApp> {
           bgImageBackgroundColor:Colors.red,
           bgColor: Colors.deepPurple,
           iconColor: Colors.blue,
+          bigLayoutIconColor: Colors.greenAccent,
           subtitleColor: Colors.deepOrange,
           titleColor: Colors.orange,
           StatusBarIcon: "drawable/baseline_pause_black_48"

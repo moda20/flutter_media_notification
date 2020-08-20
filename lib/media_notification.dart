@@ -24,7 +24,7 @@ class MediaNotification {
    */
   static Future show(
       {@required title, @required author, play = true, String image = "", List<
-          int> BitmapImage, Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Icon previousIcon,
+          int> BitmapImage, Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Color bigLayoutIconColor ,Icon previousIcon,
         String StatusBarIcon, String bgImage, List<
           int> bgBitmapImage, Color bgImageBackgroundColor}) async {
     //switching the image from a URI to a byteArray for Android with offset and length;
@@ -41,6 +41,9 @@ class MediaNotification {
       if (bgImgFile != null) {
         bgImagebytes = bgImgFile.readAsBytesSync();
       }
+    }
+    if(bigLayoutIconColor==null){
+      bigLayoutIconColor= iconColor;
     }
 
 
@@ -72,6 +75,9 @@ class MediaNotification {
       // this color is arbitrary and can be changed but it keeps a good look
       'iconColor': iconColor != null
           ? '#${iconColor.value.toRadixString(16)}'
+          : '#${Colors.black.value.toRadixString(16)}',
+      'bigLayoutIconColor': bigLayoutIconColor != null
+          ? '#${bigLayoutIconColor.value.toRadixString(16)}'
           : '#${Colors.black.value.toRadixString(16)}',
       'iconId': StatusBarIcon != null ? StatusBarIcon : ""
     };

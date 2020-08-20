@@ -30,9 +30,10 @@ public class NotificationPanel {
     private String bgImageColor;
     private String titleColor;
     private String subtitleColor;
+    private String bigLayoutIconColor;
     private String iconColor;
     private int iconId;
-    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, int iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, byte[] bgImg, int bgLength, int bgOffset, String bgImageBackgroundColor ) {
+    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, int iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, String bigLayoutIconColor,byte[] bgImg, int bgLength, int bgOffset, String bgImageBackgroundColor ) {
         this.parent = parent;
         this.title = title;
         this.author = author;
@@ -41,6 +42,7 @@ public class NotificationPanel {
         this.bgImageColor = bgImageBackgroundColor;
         this.titleColor=titleColor;
         this.subtitleColor=subtitleColor;
+        this.bigLayoutIconColor=bigLayoutIconColor;
         this.iconColor=iconColor;
         this.iconId = iconId;
         nBuilder = new NotificationCompat.Builder(parent, "com.moda.twenty/media_notification_back")
@@ -109,24 +111,27 @@ public class NotificationPanel {
             remoteView.setTextColor(R.id.author, Color.parseColor(subtitleColor));
             bigRemoteView.setTextColor(R.id.author, Color.parseColor(subtitleColor));
         }
+        Bitmap PrevBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_previous_black_36);
+        Bitmap NextBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_next_black_36);
         if(iconColor!=null){
-            Bitmap PrevBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_previous_black_36);
             remoteView.setImageViewBitmap(R.id.prev, changeBitmapColor(PrevBmp,Color.parseColor(iconColor)));
-            bigRemoteView.setImageViewBitmap(R.id.prev, changeBitmapColor(PrevBmp,Color.parseColor(iconColor)));
-            Bitmap NextBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_next_black_36);
             remoteView.setImageViewBitmap(R.id.next, changeBitmapColor(NextBmp,Color.parseColor(iconColor)));
-            bigRemoteView.setImageViewBitmap(R.id.next, changeBitmapColor(NextBmp,Color.parseColor(iconColor)));
+        }
+
+        if(bigLayoutIconColor!=null){
+            bigRemoteView.setImageViewBitmap(R.id.prev, changeBitmapColor(PrevBmp,Color.parseColor(bigLayoutIconColor)));
+            bigRemoteView.setImageViewBitmap(R.id.next, changeBitmapColor(NextBmp,Color.parseColor(bigLayoutIconColor)));
         }
 
 
         if (this.play) {
             Bitmap toggleBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_pause_black_48);
             remoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
-            bigRemoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
+            bigRemoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(bigLayoutIconColor)));
         } else {
             Bitmap toggleBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_play_arrow_black_48);
             remoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
-            bigRemoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
+            bigRemoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(bigLayoutIconColor)));
         }
 
 

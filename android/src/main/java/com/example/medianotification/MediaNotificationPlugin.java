@@ -115,8 +115,9 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
                 final String titleColor = call.argument("titleColor");
                 final String subtitleColor = call.argument("subtitleColor");
                 final String iconColor = call.argument("iconColor");
+                final String bigLayoutIconColor = call.argument("bigLayoutIconColor");
                 final String iconId = call.argument("iconId");
-                show(title, author, play, image, length, offset, iconId, bgColor, titleColor, subtitleColor, iconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor);
+                show(title, author, play, image, length, offset, iconId, bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor);
                 result.success(null);
                 break;
             case "hide":
@@ -170,7 +171,7 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
         });
     }
 
-    public static void show(String title, String author, boolean play, byte[] image, int length, int offset, String iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, byte[] bgImage, int bgLength, int bgOffset, String bgImageBackgroundColor) {
+    public static void show(String title, String author, boolean play, byte[] image, int length, int offset, String iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, String bigLayoutIconColor ,byte[] bgImage, int bgLength, int bgOffset, String bgImageBackgroundColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
@@ -179,7 +180,7 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
             NotificationManager notificationManager = registrar.context().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-        nPanel = new NotificationPanel(registrar.context(), title, author, play, image, length, offset, getResourceId(iconId), bgColor, titleColor, subtitleColor, iconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor);
+        nPanel = new NotificationPanel(registrar.context(), title, author, play, image, length, offset, getResourceId(iconId), bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor);
     }
 
     private void hide() {

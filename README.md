@@ -29,6 +29,7 @@ try {
         BitmapImage: defaultImageBytes, // an image in bytes form, can get over any permission problems 
         bgColor: Colors.deepPurple, // the background Color of the notification panel
         iconColor: Colors.blue, // The control icons colors
+        bigLayoutIconColor: Colors.greenAccent, // controls Icon color for the big layout. if not set the iconColor would be used instead
         subtitleColor: Colors.deepOrange, // The subtitle color
         titleColor: Colors.orange // the title color
       );
