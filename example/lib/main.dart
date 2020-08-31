@@ -81,7 +81,8 @@ class _MyAppState extends State<MyApp> {
           bigLayoutIconColor: Colors.greenAccent,
           subtitleColor: Colors.deepOrange,
           titleColor: Colors.orange,
-          StatusBarIcon: "drawable/baseline_pause_black_48"
+          StatusBarIcon: "drawable/baseline_pause_black_48",
+          timeStamp: "23:23"
       );
       setState(() => status = 'play');
     } on PlatformException {
@@ -117,6 +118,12 @@ class _MyAppState extends State<MyApp> {
                 FlatButton(
                   child: Text('Change Status Icon'),
                   onPressed: changeStatusIcon,
+                ),
+                FlatButton(
+                  child: Text('Set Time stamp'),
+                  onPressed: (){
+                    MediaNotification.setTimestamp("${DateTime.now().day}:${DateTime.now().month}");
+                  },
                 ),
                 Text('Status: ' + status)
               ],

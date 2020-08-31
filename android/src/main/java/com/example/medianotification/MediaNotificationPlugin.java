@@ -117,7 +117,8 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
                 final String iconColor = call.argument("iconColor");
                 final String bigLayoutIconColor = call.argument("bigLayoutIconColor");
                 final String iconId = call.argument("iconId");
-                show(title, author, play, image, length, offset, iconId, bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor);
+                final String timestamp = call.argument("timestamp");
+                show(title, author, play, image, length, offset, iconId, bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor, timestamp);
                 result.success(null);
                 break;
             case "hide":
@@ -148,6 +149,11 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
                 setTo(isPlay);
                 result.success(null);
                 break;
+            case "setTimestamp":
+                String newTimestamp = call.argument("timestamp");
+                setTimestamp(newTimestamp);
+                result.success(null);
+                break;
             default:
                 result.notImplemented();
         }
@@ -171,7 +177,7 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
         });
     }
 
-    public static void show(String title, String author, boolean play, byte[] image, int length, int offset, String iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, String bigLayoutIconColor ,byte[] bgImage, int bgLength, int bgOffset, String bgImageBackgroundColor) {
+    public static void show(String title, String author, boolean play, byte[] image, int length, int offset, String iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, String bigLayoutIconColor ,byte[] bgImage, int bgLength, int bgOffset, String bgImageBackgroundColor, String timestamp) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
@@ -180,7 +186,7 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
             NotificationManager notificationManager = registrar.context().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-        nPanel = new NotificationPanel(registrar.context(), title, author, play, image, length, offset, getResourceId(iconId), bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor);
+        nPanel = new NotificationPanel(registrar.context(), title, author, play, image, length, offset, getResourceId(iconId), bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor, timestamp);
     }
 
     private void hide() {
@@ -197,6 +203,11 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
     public void setSubTitle(String subtitle) {
         if(nPanel!=null){
             nPanel.setSubtitle(subtitle);
+        }
+    }
+    public void setTimestamp(String timestamp) {
+        if(nPanel!=null){
+            nPanel.setTimeStamp(timestamp);
         }
     }
     public void togglePlayPause() {

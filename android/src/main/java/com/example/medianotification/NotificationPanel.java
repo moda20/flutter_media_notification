@@ -32,8 +32,9 @@ public class NotificationPanel {
     private String subtitleColor;
     private String bigLayoutIconColor;
     private String iconColor;
+    private String timeStamp;
     private int iconId;
-    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, int iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, String bigLayoutIconColor,byte[] bgImg, int bgLength, int bgOffset, String bgImageBackgroundColor ) {
+    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, int iconId, String bgColor, String titleColor, String subtitleColor, String iconColor, String bigLayoutIconColor,byte[] bgImg, int bgLength, int bgOffset, String bgImageBackgroundColor, String timeStamp ) {
         this.parent = parent;
         this.title = title;
         this.author = author;
@@ -45,6 +46,7 @@ public class NotificationPanel {
         this.bigLayoutIconColor=bigLayoutIconColor;
         this.iconColor=iconColor;
         this.iconId = iconId;
+        this.timeStamp=timeStamp;
         nBuilder = new NotificationCompat.Builder(parent, "com.moda.twenty/media_notification_back")
                 .setContentTitle("Player")
 
@@ -67,6 +69,14 @@ public class NotificationPanel {
         bigRemoteView.setTextViewText(R.id.title, title);
         remoteView.setTextViewText(R.id.author, author);
         bigRemoteView.setTextViewText(R.id.author, author);
+
+        if(timeStamp!=null){
+            remoteView.setTextViewText(R.id.timeStamp, timeStamp);
+            bigRemoteView.setTextViewText(R.id.timeStamp, timeStamp);
+        }else{
+            remoteView.setTextViewText(R.id.timeStamp, "--/--");
+            bigRemoteView.setTextViewText(R.id.timeStamp, "--/--");
+        }
 
         if (image != null) {
 
@@ -106,6 +116,8 @@ public class NotificationPanel {
         if(titleColor!=null){
             remoteView.setTextColor(R.id.title, Color.parseColor(titleColor));
             bigRemoteView.setTextColor(R.id.title, Color.parseColor(titleColor));
+            //The timestamp color has the same color as the Title in small layout
+            remoteView.setTextColor(R.id.timeStamp, Color.parseColor(titleColor));
         }
         if(subtitleColor!=null){
             remoteView.setTextColor(R.id.author, Color.parseColor(subtitleColor));
@@ -121,6 +133,8 @@ public class NotificationPanel {
         if(bigLayoutIconColor!=null){
             bigRemoteView.setImageViewBitmap(R.id.prev, changeBitmapColor(PrevBmp,Color.parseColor(bigLayoutIconColor)));
             bigRemoteView.setImageViewBitmap(R.id.next, changeBitmapColor(NextBmp,Color.parseColor(bigLayoutIconColor)));
+            //The timestamp color has the same color as the icons in big layout
+            bigRemoteView.setTextColor(R.id.timeStamp, Color.parseColor(bigLayoutIconColor));
         }
 
 
@@ -160,13 +174,23 @@ public class NotificationPanel {
     }
 
     public void setSubtitle(String subtitle){
-        if(title!=null){
+        if(subtitle!=null){
             remoteView.setTextViewText(R.id.author, subtitle);
             bigRemoteView.setTextViewText(R.id.author, subtitle);
             nBuilder.setCustomContentView(remoteView);
             nBuilder.setCustomBigContentView(bigRemoteView);
             nManager.notify(1,nBuilder.build());
         }
+    }
+
+    public void setTimeStamp(String timeStamp){
+        String newTimestamp="";
+        if(timeStamp==null) newTimestamp="--/--"; else newTimestamp=timeStamp;
+        remoteView.setTextViewText(R.id.timeStamp, newTimestamp);
+        bigRemoteView.setTextViewText(R.id.timeStamp, newTimestamp);
+        nBuilder.setCustomContentView(remoteView);
+        nBuilder.setCustomBigContentView(bigRemoteView);
+        nManager.notify(1,nBuilder.build());
     }
 
     public void togglePlayPause(){

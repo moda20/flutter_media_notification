@@ -26,7 +26,7 @@ class MediaNotification {
       {@required title, @required author, play = true, String image = "", List<
           int> BitmapImage, Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Color bigLayoutIconColor ,Icon previousIcon,
         String StatusBarIcon, String bgImage, List<
-          int> bgBitmapImage, Color bgImageBackgroundColor}) async {
+          int> bgBitmapImage, Color bgImageBackgroundColor, String timeStamp}) async {
     //switching the image from a URI to a byteArray for Android with offset and length;
     List<int> imagebytes;
     List<int> bgImagebytes;
@@ -79,7 +79,8 @@ class MediaNotification {
       'bigLayoutIconColor': bigLayoutIconColor != null
           ? '#${bigLayoutIconColor.value.toRadixString(16)}'
           : '#${Colors.black.value.toRadixString(16)}',
-      'iconId': StatusBarIcon != null ? StatusBarIcon : ""
+      'iconId': StatusBarIcon != null ? StatusBarIcon : "",
+      'timestamp': timeStamp != null ? timeStamp : "--/--"
     };
     await _channel.invokeMethod('show', params);
 
@@ -103,6 +104,13 @@ class MediaNotification {
       'title': title,
     };
     await _channel.invokeMethod('setTitle', params);
+  }
+
+  static Future setTimestamp(String timeStamp) async{
+    final Map<String, dynamic> params = <String, dynamic>{
+      'timestamp': timeStamp,
+    };
+    await _channel.invokeMethod('setTimestamp', params);
   }
 
   static Future setStatusIcon(String iconName) async {

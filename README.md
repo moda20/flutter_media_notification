@@ -19,7 +19,7 @@ You can call the show method to show the media controls like follow :
     List<int> defaultImageBytes = dibd.buffer.asUint8List();
 
 try {
-      await MediaNotification.show(
+      await MediaNotification.show( 
         title: title, // the title of the track
         author: author, // a subtitle usually the artist
         image:"/storage/emulated/0/Pictures/Reddit/c4c7164.jpg", // an image, Must be a URI
@@ -31,7 +31,8 @@ try {
         iconColor: Colors.blue, // The control icons colors
         bigLayoutIconColor: Colors.greenAccent, // controls Icon color for the big layout. if not set the iconColor would be used instead
         subtitleColor: Colors.deepOrange, // The subtitle color
-        titleColor: Colors.orange // the title color
+        titleColor: Colors.orange, // the title color
+        timeStamp: "23:23" // The timestamp tat will be shown 
       );
     } on PlatformException {
 
@@ -60,6 +61,8 @@ You can use the next functions and listeners n order to further polish the exper
 `MediaNotification.setSubtitle(SubtitleString);` must take a String argument will change the subtitle on the notification to the given string
 
 `MediaNotification.setTitle(TitleString);` must take a String argument will change the title on the notification to the given string
+
+`MediaNotification.setTimestamp(Timestamp);` must take a String argument will change the shown timestamp on the notification to the given string
 
 `MediaNotification.setStatusIcon(IconString);` must take a String argument will change the icon on the Statusbar to the given string
  *IconString argument must be the path to the icon in the `res` folder. i.e : `"drawable/baseline_play_arrow_black_48"`
