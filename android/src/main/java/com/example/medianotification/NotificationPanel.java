@@ -17,6 +17,8 @@ import androidx.core.app.NotificationCompat;
  */
 
 public class NotificationPanel {
+    private static final int NOTIFICATION_ID = 121;
+    private static final int REQUEST_CODE = 240;
     private Context parent;
     private NotificationManager nManager;
     private NotificationCompat.Builder nBuilder;
@@ -156,7 +158,7 @@ public class NotificationPanel {
         Notification notification = nBuilder.build();
 
         nManager = (NotificationManager) parent.getSystemService(Context.NOTIFICATION_SERVICE);
-        nManager.notify(1, notification);
+        nManager.notify(NOTIFICATION_ID, notification);
     }
 
     public boolean isPlay() {
@@ -169,7 +171,7 @@ public class NotificationPanel {
             bigRemoteView.setTextViewText(R.id.title, title);
             nBuilder.setCustomContentView(remoteView);
             nBuilder.setCustomBigContentView(bigRemoteView);
-            nManager.notify(1,nBuilder.build());
+            nManager.notify(NOTIFICATION_ID,nBuilder.build());
         }
     }
 
@@ -179,7 +181,7 @@ public class NotificationPanel {
             bigRemoteView.setTextViewText(R.id.author, subtitle);
             nBuilder.setCustomContentView(remoteView);
             nBuilder.setCustomBigContentView(bigRemoteView);
-            nManager.notify(1,nBuilder.build());
+            nManager.notify(NOTIFICATION_ID,nBuilder.build());
         }
     }
 
@@ -190,7 +192,7 @@ public class NotificationPanel {
         bigRemoteView.setTextViewText(R.id.timeStamp, newTimestamp);
         nBuilder.setCustomContentView(remoteView);
         nBuilder.setCustomBigContentView(bigRemoteView);
-        nManager.notify(1,nBuilder.build());
+        nManager.notify(NOTIFICATION_ID,nBuilder.build());
     }
 
     public void togglePlayPause(){
@@ -207,7 +209,7 @@ public class NotificationPanel {
         nBuilder.setCustomContentView(remoteView);
         nBuilder.setCustomBigContentView(bigRemoteView);
         nBuilder.setOngoing(this.play);
-        nManager.notify(1,nBuilder.build());
+        nManager.notify(NOTIFICATION_ID,nBuilder.build());
     }
 
     public void setTo(boolean play){
@@ -224,13 +226,13 @@ public class NotificationPanel {
         nBuilder.setCustomContentView(remoteView);
         nBuilder.setCustomBigContentView(bigRemoteView);
         nBuilder.setOngoing(this.play);
-        nManager.notify(1,nBuilder.build());
+        nManager.notify(NOTIFICATION_ID,nBuilder.build());
     }
 
 
     public void setIcon(int iconId){
         nBuilder.setSmallIcon(iconId);
-        nManager.notify(1,nBuilder.build());
+        nManager.notify(NOTIFICATION_ID,nBuilder.build());
     }
 
 
@@ -239,25 +241,25 @@ public class NotificationPanel {
         Intent intent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("toggle")
                 .putExtra("action", !this.play ? "play" : "pause");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(parent, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(parent, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.toggle, pendingIntent);
 
         // Вперед
         Intent nextIntent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("next");
-        PendingIntent pendingNextIntent = PendingIntent.getBroadcast(parent, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingNextIntent = PendingIntent.getBroadcast(parent, REQUEST_CODE, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.next, pendingNextIntent);
 
         // Назад
         Intent prevIntent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("prev");
-        PendingIntent pendingPrevIntent = PendingIntent.getBroadcast(parent, 0, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingPrevIntent = PendingIntent.getBroadcast(parent, REQUEST_CODE, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.prev, pendingPrevIntent);
 
         // Нажатие на уведомление
         Intent selectIntent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("select");
-        PendingIntent selectPendingIntent = PendingIntent.getBroadcast(parent, 0, selectIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent selectPendingIntent = PendingIntent.getBroadcast(parent, REQUEST_CODE, selectIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         //Deprecated intent usage. the intent will be triggered for both base and big view. this is due to an unknown problem with the views
         //where it does only register the intent to a sing view, namely the one that is registered for last. This might be problematic if we want to register
@@ -273,25 +275,25 @@ public class NotificationPanel {
         Intent intent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("toggle")
                 .putExtra("action", !this.play ? "play" : "pause");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(parent, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(parent, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.toggle, pendingIntent);
 
         // Вперед
         Intent nextIntent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("next");
-        PendingIntent pendingNextIntent = PendingIntent.getBroadcast(parent, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingNextIntent = PendingIntent.getBroadcast(parent, REQUEST_CODE, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.next, pendingNextIntent);
 
         // Назад
         Intent prevIntent = new Intent(parent, NotificationReturnSlot.class)
                 .setAction("prev");
-        PendingIntent pendingPrevIntent = PendingIntent.getBroadcast(parent, 0, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingPrevIntent = PendingIntent.getBroadcast(parent, REQUEST_CODE, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.prev, pendingPrevIntent);
     }
 
 
     public void notificationCancel() {
-        nManager.cancel(1);
+        nManager.cancel(NOTIFICATION_ID);
     }
 
     public static Bitmap changeBitmapColor(Bitmap srcBmp, int dstColor)
