@@ -59,9 +59,10 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
     private static NotificationPanel nPanel;
     private static MethodChannel channel;
     private static MethodChannel back_channel;
+    private static Context mContext;
 
-    private MediaNotificationPlugin(Registrar r) {
-        registrar = r;
+    public MediaNotificationPlugin() {
+
     }
 
     /**
@@ -69,14 +70,15 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
      */
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL_ID);
-        MediaNotificationPlugin instance = new MediaNotificationPlugin(registrar);
+        MediaNotificationPlugin instance = new MediaNotificationPlugin();
         instance.initInstance(registrar.messenger(), registrar.context());
     }
 
     private void initInstance(BinaryMessenger binaryMessenger, Context context) {
         MediaNotificationPlugin.channel  = new MethodChannel(binaryMessenger, CHANNEL_ID);
         MediaNotificationPlugin.back_channel  = new MethodChannel(binaryMessenger, BACK_CHANNEL_ID);
-        MediaNotificationPlugin.channel.setMethodCallHandler(new MediaNotificationPlugin(registrar));
+        MediaNotificationPlugin.channel.setMethodCallHandler(new MediaNotificationPlugin());
+        mContext= context;
     }
 
 
@@ -183,10 +185,10 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
             channel.enableVibration(false);
             channel.setSound(null, null);
-            NotificationManager notificationManager = registrar.context().getSystemService(NotificationManager.class);
+            NotificationManager notificationManager = mContext.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-        nPanel = new NotificationPanel(registrar.context(), title, author, play, image, length, offset, getResourceId(iconId), bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor, timestamp);
+        nPanel = new NotificationPanel(mContext, title, author, play, image, length, offset, getResourceId(iconId), bgColor, titleColor, subtitleColor, iconColor, bigLayoutIconColor, bgImage, bgLength, bgOffset, bgImageBackgroundColor, timestamp);
     }
 
     private void hide() {
@@ -236,7 +238,7 @@ public class MediaNotificationPlugin implements MethodCallHandler, FlutterPlugin
         String[] parts = resource.split("/");
         String resourceType = parts[0];
         String resourceName = parts[1];
-        return registrar.context().getResources().getIdentifier(resourceName, resourceType, registrar.context().getApplicationContext().getPackageName());
+        return mContext.getResources().getIdentifier(resourceName, resourceType, mContext.getApplicationContext().getPackageName());
     }
 }
 
