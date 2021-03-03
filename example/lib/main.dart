@@ -73,8 +73,8 @@ class _MyAppState extends State<MyApp> {
       await MediaNotification.show(
           title: title,
           author: author,
-          image: "/storage/emulated/0/Pictures/Reddit/c4c7164.jpg",
-          bgImage: "/storage/emulated/0/Pictures/Reddit/c4c7164.jpg",
+          image: "/storage/emulated/0/Pictures/141614912_2888487948105721_5741241733686363791_n.jpg",
+          bgImage: "/storage/emulated/0/Pictures/141614912_2888487948105721_5741241733686363791_n.jpg",
           bgImageBackgroundColor:Colors.red,
           bgColor: Colors.deepPurple,
           iconColor: Colors.blue,

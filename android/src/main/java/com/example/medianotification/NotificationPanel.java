@@ -1,6 +1,7 @@
 package com.example.medianotification;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -19,6 +20,7 @@ import androidx.core.app.NotificationCompat;
 public class NotificationPanel {
     private static final int NOTIFICATION_ID = 121;
     private static final int REQUEST_CODE = 240;
+    private static final String CHANNEL_ID = "com.moda.twenty/media_notification_back";
     private Context parent;
     private NotificationManager nManager;
     private NotificationCompat.Builder nBuilder;
@@ -49,7 +51,25 @@ public class NotificationPanel {
         this.iconColor=iconColor;
         this.iconId = iconId;
         this.timeStamp=timeStamp;
-        nBuilder = new NotificationCompat.Builder(parent, "com.moda.twenty/media_notification_back")
+        nManager = (NotificationManager) parent.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            CharSequence name = "media_notification_channel";
+            String Description = "MusicControls Channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            mChannel.setDescription(Description);
+            mChannel.enableLights(false);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{0L});
+            mChannel.setShowBadge(false);
+            mChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            nManager.createNotificationChannel(mChannel);
+        }
+
+        nBuilder = new NotificationCompat.Builder(parent, CHANNEL_ID)
                 .setContentTitle("Player")
 
                 .setPriority(Notification.PRIORITY_DEFAULT)
@@ -157,7 +177,7 @@ public class NotificationPanel {
         nBuilder.setCustomBigContentView(bigRemoteView);
         Notification notification = nBuilder.build();
 
-        nManager = (NotificationManager) parent.getSystemService(Context.NOTIFICATION_SERVICE);
+
         nManager.notify(NOTIFICATION_ID, notification);
     }
 
